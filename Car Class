@@ -1,0 +1,48 @@
+class Car extends Rectangle {
+  float xspeed;
+  int r;
+  int g;
+  int b;
+
+  Car(float x, float y, float w, float h, float xspeed, int r, int g, int b) {
+    super(x, y, w, h);
+    this.xspeed = xspeed;
+
+    // Set a car's color to the exact opposite of the containing row's color for optimal visibility.
+    this.r = 255 - r;
+    this.g = 255 - g;
+    this.b = 255 - b;
+  }
+
+  void show() {
+    fill(r, g, b);
+    rectMode(CORNERS);
+    if (xspeed > 0) {
+      // Car is driving Right (Display front of truck on right)
+      rect(this.left, this.bottom - 3, this.right - 7, this.top + 3);
+      fill(r + 10, g + 10, b + 10);
+      rect(this.right - 7, this.bottom - 3.5, this.right, this.top + 4.5);
+    } else {
+      // Car is driving Left (Display front of truck on left)
+      rect(this.left + 7, this.bottom - 3, this.right, this.top + 3);
+      fill(r + 10, g + 10, b + 10);
+      rect(this.left, this.bottom - 3.5, this.left + 7, this.top + 4.5);
+    }
+    
+    // Add special effects to make the car look unique
+    // Draw wheels
+    fill(0); // Black wheels
+    ellipseMode(CENTER);
+    float wheelDiameter = (this.right - this.left) / 5;
+    ellipse(this.left + wheelDiameter, this.bottom - wheelDiameter / 2, wheelDiameter, wheelDiameter);
+    ellipse(this.right - wheelDiameter, this.bottom - wheelDiameter / 2, wheelDiameter, wheelDiameter);
+  }
+
+  void update() {
+    this.cpos(xspeed, 0);
+  }
+
+  void moveDown() {
+    this.cpos(0, -5);
+  }
+}
